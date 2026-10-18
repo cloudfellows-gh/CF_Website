@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="nl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CloudFellows — Security die werkt, zonder complexiteit</title>
+<meta name="description" content="CloudFellows brengt structuur, overzicht en aantoonbare grip op de security van uw Microsoft-omgeving: Entra ID, Intune, Defender en Purview.">
+<link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<script>
+  // Theme before paint: saved choice, else system preference
+  (function(){try{var t=localStorage.getItem('cf-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+</script>
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#F1F8F7; --text:#081C3B; --muted:#4A5A72; --line:#DCE3EE;
+  --accent:#0066FF; --accent-ink:#FFFFFF; --accent-soft:#E5EFFF;
+  --teal:#0B7F72; --teal-bright:#00B9AE; --teal-soft:#DDF5F2;
+  --amber:#B45309; --amber-soft:#FDEFD8;
+  --shadow:0 12px 32px rgba(8,28,59,.08);
+}
+[data-theme="dark"]{
+  --bg:#0B1730; --surface:#11213D; --surface2:#0E1E36; --text:#EEF3FA; --muted:#A9B7CC; --line:#223556;
+  --accent:#5B9CFF; --accent-ink:#081C3B; --accent-soft:#17315E;
+  --teal:#3FD1BF; --teal-bright:#00B9AE; --teal-soft:#0F3634;
+  --amber:#F2B45A; --amber-soft:#3A2A10;
+  --shadow:0 12px 32px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:var(--accent);text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--teal)}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.1}
+.h1{font-size:clamp(38px,5vw,60px);line-height:1.04;font-weight:800}
+.h2{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.lead{font-size:18px;line-height:1.6;color:var(--muted);margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;border:1px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.teal{background:var(--teal-bright);color:#06201D}
+.btn.sm{height:40px;padding:0 16px;font-size:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px}
+.section{padding:88px 0}
+.alt{background:var(--surface2)}
+.head{max-width:720px;display:flex;flex-direction:column;gap:14px;margin-bottom:44px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.pad{padding:28px}
+.card h3{font-size:20px;font-weight:700;margin:14px 0 10px}
+.card p{margin:0;font-size:15px;line-height:1.6;color:var(--muted)}
+.num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);font-weight:500}
+.status{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.ok{background:var(--teal-soft);color:var(--teal)}.warn{background:var(--amber-soft);color:var(--amber)}.info{background:var(--accent-soft);color:var(--accent)}
+.list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.list li{display:flex;gap:10px;align-items:flex-start}
+.list svg{flex:none;margin-top:3px;color:var(--teal)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:76px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--text);font-size:21px;letter-spacing:-.02em;font-weight:800}
+.brand img{width:40px;height:43px}
+.brand .c{color:var(--accent)}.brand .f{color:var(--teal-bright)}
+.navlinks{display:flex;gap:28px;font-size:15px;font-weight:500}
+.navlinks a{color:var(--muted)}.navlinks a:hover,.navlinks a.on{color:var(--text)}
+.navright{display:flex;align-items:center;gap:12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface);font-size:13px;font-weight:600}
+.seg button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;color:var(--muted)}.seg button.on{background:var(--accent-soft);color:var(--accent)}
+.iconbtn{width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--text);cursor:pointer}
+.iconbtn:hover{border-color:var(--teal-bright);color:var(--teal)}
+.iconbtn .sun{display:none}[data-theme="dark"] .iconbtn .sun{display:block}[data-theme="dark"] .iconbtn .moon{display:none}
+
+/* hero */
+.hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:center;padding:72px 0 80px}
+.hero-l{display:flex;flex-direction:column;gap:26px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;color:var(--muted);width:fit-content}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--teal-bright)}
+.trust{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--muted);font-weight:500}.trust b{color:var(--teal);margin-right:4px}
+.posture{padding:28px;box-shadow:var(--shadow);border-top:4px solid var(--teal-bright)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.row .l{display:flex;align-items:center;gap:12px}
+.ico{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.row:nth-child(odd) .ico{background:var(--teal-soft);color:var(--teal)}
+.note{margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--surface2);font-size:13px;color:var(--muted)}
+
+/* diensten */
+.svc{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.svc:nth-child(odd){border-top:3px solid var(--accent)}.svc:nth-child(even){border-top:3px solid var(--teal-bright)}
+.svc .art{background:var(--surface2);display:flex;justify-content:center;padding:8px 0 0}
+.svc .art img{width:230px;height:230px}
+.icon-dark{display:none}[data-theme="dark"] .icon-dark{display:block}[data-theme="dark"] .icon-light{display:none}
+.svc .body{padding:22px 26px 26px}
+.svc b{font-size:24px;font-weight:800;color:var(--accent);line-height:1}.svc:nth-child(even) b{color:var(--teal)}
+.svc .sub{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-top:4px}
+.svc p{margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--surface2);color:var(--text);border:1px solid var(--line)}
+
+/* aanpak */
+.step{padding:24px;border-top:3px solid var(--accent)}.step:nth-child(even){border-top-color:var(--teal-bright)}
+.grid3 .card:nth-child(2) .ico{background:var(--teal-soft);color:var(--teal)}
+.ico.lg{width:44px;height:44px;border-radius:12px}
+
+/* cta + footer */
+.cta{background:var(--text);color:var(--bg);border-radius:28px;padding:64px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+[data-theme="dark"] .cta{background:var(--teal-soft);color:var(--text);border:1px solid var(--teal)}
+.cta .mono{color:var(--teal-bright)}
+.cta h2{font-size:36px;font-weight:800;margin-top:10px}.cta p{margin:10px 0 0;opacity:.8}
+.foot{padding:48px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.foot .navlinks{font-size:14px}
+
+@media (max-width:960px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:none}}
+@media (max-width:760px){.hero,.grid2,.grid3,.grid4{grid-template-columns:repeat(1,minmax(0,1fr))}.hero{padding:40px 0 56px;gap:36px}.section{padding:56px 0}.cta{padding:36px;border-radius:20px}.wrap{padding:0 20px}.nav .wrap{height:68px}.navright .btn{display:none}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="CloudFellows home"><img src="assets/logo-mark.svg" alt=""><span><span class="c">Cloud</span><span class="f">Fellows</span></span></a>
+    <nav class="navlinks" aria-label="Hoofdmenu"><a href="#top" class="on">Home</a><a href="#diensten">Diensten</a><a href="#aanpak">Aanpak</a><a href="#over">Over ons</a><a href="#contact">Contact</a></nav>
+    <div class="navright">
+      <div class="seg" role="group" aria-label="Taal"><button class="on" type="button">NL</button><button type="button">EN</button></div>
+      <button class="iconbtn" id="themeToggle" type="button" aria-label="Schakel licht/donker">
+        <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="#contact" class="btn primary">Plan een kennismaking</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="wrap hero">
+  <div class="hero-l">
+    <span class="pill"><i></i>Microsoft Security Consultancy · Zoetermeer</span>
+    <h1 class="h1">Security die werkt, <span style="color:var(--accent)">zonder complexiteit.</span></h1>
+    <p class="lead">Veel organisaties weten niet precies hoe goed hun Microsoft-omgeving is beveiligd. CloudFellows brengt structuur, overzicht en aantoonbare grip op uw Entra ID, Intune, Defender en Purview.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="#contact" class="btn primary">Plan een kennismaking <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="#diensten" class="btn ghost">Bekijk onze diensten</a>
+    </div>
+    <div class="trust"><span><b>✓</b>Onafhankelijk advies</span><span><b>✓</b>Microsoft-specialisten</span><span><b>✓</b>Kennisborging inbegrepen</span></div>
+  </div>
+  <div class="card posture" aria-label="Voorbeeld van een security-overzicht">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div><div class="mono">Security posture</div><div style="font-size:18px;font-weight:700;margin-top:4px">Uw Microsoft 365-tenant</div></div>
+      <span class="status info">Overzicht</span>
+    </div>
+    <div class="row"><div class="l"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><div style="font-weight:600">Identiteit &amp; toegang</div><div style="font-size:13px;color:var(--muted)">Conditional Access · MFA · PIM</div></div></div><span class="status ok">Ingericht</span></div>
+    <div class="row"><div class="l"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span><div><div style="font-weight:600">Endpoints</div><div style="font-size:13px;color:var(--muted)">Intune · Compliance · App control</div></div></div><span class="status ok">Ingericht</span></div>
+    <div class="row"><div class="l"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7z"/></svg></span><div><div style="font-weight:600">Dreigingsbescherming</div><div style="font-size:13px;color:var(--muted)">Defender XDR · ASR-regels</div></div></div><span class="status warn">Aandacht</span></div>
+    <div class="row"><div class="l"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 13h8M8 17h5"/></svg></span><div><div style="font-weight:600">Data &amp; governance</div><div style="font-size:13px;color:var(--muted)">Purview · Labels · DLP</div></div></div><span class="status warn">Aandacht</span></div>
+    <div class="note">Zo ziet een eerste analyse eruit: per domein zichtbaar wat goed staat en waar risico zit.</div>
+  </div>
+</section>
+
+<section class="section alt" id="diensten" style="padding-top:72px">
+  <div class="wrap">
+    <div class="head"><span class="mono">Onze diensten</span><h2 class="h2">Vier domeinen, één samenhangende inrichting</h2><p class="lead">Geen losse tools, maar identiteit, apparaten, data en governance die op elkaar aansluiten.</p></div>
+    <div class="grid4">
+      <article class="card svc">
+        <div class="art"><img class="icon-light" src="assets/icons/iam-light.svg" alt="Identity & Access Management"><img class="icon-dark" src="assets/icons/iam-dark.svg" alt="Identity & Access Management"></div>
+        <div class="body"><b>IAM</b><span class="sub">Identity &amp; Access Management</span><p>Wie krijgt toegang, waarvandaan en onder welke voorwaarden? Wij richten Entra ID zo in dat elke toegang expliciet wordt geverifieerd — voor gebruikers én beheerders.</p>
+        <div class="chips"><span class="chip">Conditional Access</span><span class="chip">MFA &amp; passwordless</span><span class="chip">PIM &amp; admin-rollen</span></div></div>
+      </article>
+      <article class="card svc">
+        <div class="art"><img class="icon-light" src="assets/icons/mdm-light.svg" alt="Endpoint Management"><img class="icon-dark" src="assets/icons/mdm-dark.svg" alt="Endpoint Management"></div>
+        <div class="body"><b>MDM</b><span class="sub">Endpoint Management</span><p>Alleen apparaten die aantoonbaar voldoen, krijgen toegang tot uw data. Intune-inrichting met compliance-regels, app-controle en Defender op elk apparaat.</p>
+        <div class="chips"><span class="chip">Intune compliance</span><span class="chip">Windows · macOS · mobiel</span><span class="chip">App control &amp; Defender</span></div></div>
+      </article>
+      <article class="card svc">
+        <div class="art"><img class="icon-light" src="assets/icons/dlp-light.svg" alt="Data Protectie"><img class="icon-dark" src="assets/icons/dlp-dark.svg" alt="Data Protectie"></div>
+        <div class="body"><b>DLP</b><span class="sub">Data Protectie</span><p>Weten waar gevoelige informatie staat en voorkomen dat die ongemerkt de deur uit gaat. Classificatie en beleid dat werkt zonder medewerkers in de weg te zitten.</p>
+        <div class="chips"><span class="chip">Sensitivity labels</span><span class="chip">DLP-beleid</span><span class="chip">Retentie &amp; Purview</span></div></div>
+      </article>
+      <article class="card svc">
+        <div class="art"><img class="icon-light" src="assets/icons/m365-light.svg" alt="Governance & Control"><img class="icon-dark" src="assets/icons/m365-dark.svg" alt="Governance & Control"></div>
+        <div class="body"><b>M365</b><span class="sub">Governance &amp; Control</span><p>Grip op de tenant zelf: instellingen, rollen, licenties en wie wat mag. Een vastgelegde baseline, zodat wijzigingen gecontroleerd en aantoonbaar zijn.</p>
+        <div class="chips"><span class="chip">Tenant-baseline (CIS)</span><span class="chip">Rollen &amp; licenties</span><span class="chip">Secure Score &amp; rapportage</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head"><span class="mono">Herkenbaar?</span><h2 class="h2">Veel organisaties lopen tegen dezelfde uitdagingen aan</h2><p class="lead">Security groeit vaak stap voor stap mee met de praktijk, zonder duidelijke lijn. Het resultaat: een omgeving die moeilijk te overzien is.</p></div>
+    <div class="grid3">
+      <div class="card pad"><span class="num">01</span><h3>Security is organisch gegroeid</h3><p>Nieuwe oplossingen zijn toegevoegd wanneer dat nodig was. Er is geen duidelijke samenhang of architectuur meer.</p></div>
+      <div class="card pad"><span class="num">02</span><h3>Onduidelijk waar de risico's zitten</h3><p>Wat is goed ingericht? Wat is kwetsbaar? Zonder helder beeld is het moeilijk om de juiste keuzes te maken.</p></div>
+      <div class="card pad"><span class="num">03</span><h3>Kennis zit bij te weinig mensen</h3><p>Beheer is afhankelijk van specifieke personen. Dat maakt de organisatie kwetsbaar bij uitval of vertrek.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="aanpak">
+  <div class="wrap">
+    <div class="head"><span class="mono">Onze aanpak</span><h2 class="h2">Wij brengen structuur en overzicht terug</h2><p class="lead">We starten vanuit uw risico's en doelstellingen en vertalen dat naar concrete keuzes en heldere kaders. Geen losse tools, maar een samenhangende inrichting die in de praktijk werkt.</p></div>
+    <div class="grid4">
+      <div class="card step"><span class="num">Stap 1</span><h3>Analyse</h3><p>Onafhankelijke analyse van uw huidige situatie, getoetst aan Microsoft best practices en CIS-benchmarks.</p></div>
+      <div class="card step"><span class="num">Stap 2</span><h3>Architectuur</h3><p>Duidelijke architectuur en richtinggevende kaders voor identiteit, endpoints, data en dreigingsbescherming.</p></div>
+      <div class="card step"><span class="num">Stap 3</span><h3>Implementatie</h3><p>Concrete implementatie, afgestemd op uw omgeving en gecontroleerd doorgevoerd.</p></div>
+      <div class="card step"><span class="num">Stap 4</span><h3>Borging</h3><p>Documentatie en overdracht, zodat kennis niet afhankelijk is van personen.</p></div>
+    </div>
+    <div style="margin-top:28px"><a href="#aanpak" class="btn ghost">Meer over onze aanpak</a></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head"><span class="mono">Wat past bij u?</span><h2 class="h2">Security-scan of tenant-analyse?</h2><p class="lead">Beide geven inzicht in de beveiliging van uw Microsoft 365-omgeving, maar verschillen in diepgang.</p></div>
+    <div class="grid2">
+      <div class="card pad"><span class="status info">Snel eerste inzicht</span><h3>Security-scan</h3><p>Een snelle meting van uw huidige beveiligingsniveau, zonder impact op uw omgeving.</p>
+        <ul class="list"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Secure Score-meting</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Controle van MFA, legacy auth en admin-rollen</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Quick wins die u direct kunt doorvoeren</li></ul>
+        <div style="margin-top:22px"><a href="#contact" class="btn ghost sm">Vraag een scan aan</a></div></div>
+      <div class="card pad" style="border-color:var(--teal-bright)"><span class="status ok">Volledig beeld &amp; plan</span><h3>Tenant-analyse</h3><p>Een diepgaand onderzoek van uw complete tenant door een specialist, inclusief stappenplan.</p>
+        <ul class="list"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Review van Entra ID, Intune, Defender en Purview</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Rapport met kwetsbaarheden en impact per bevinding</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Geprioriteerd maatregelenplan, persoonlijk toegelicht</li></ul>
+        <div style="margin-top:22px"><a href="#contact" class="btn primary sm">Vraag een analyse aan</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="over">
+  <div class="wrap">
+    <div class="head"><span class="mono">Wat het oplevert</span><h2 class="h2">Grip op uw security, zonder rem op uw organisatie</h2><p class="lead">Een heldere inrichting geeft rust. U weet waar u staat, kunt veranderingen veilig doorvoeren en kunt aantonen hoe uw security is opgezet.</p></div>
+    <div class="grid3">
+      <div class="card pad"><span class="ico lg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><h3>Inzicht en controle</h3><p>U weet waar de risico's zitten en kunt gericht bijsturen in plaats van reageren op incidenten.</p></div>
+      <div class="card pad"><span class="ico lg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="var(--surface)"/><circle cx="15" cy="12" r="2" fill="var(--surface)"/><circle cx="8" cy="18" r="2" fill="var(--surface)"/></svg></span><h3>Voorspelbaar beheer</h3><p>Configuraties sluiten op elkaar aan. Wijzigingen zijn gecontroleerd en leiden niet tot onverwachte gevolgen.</p></div>
+      <div class="card pad"><span class="ico lg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13H6z"/><path d="M9 14l2 2 4-4"/></svg></span><h3>Aantoonbare inrichting</h3><p>U kunt laten zien hoe uw security is opgezet. Dat versterkt uw positie bij audits, klanten en stakeholders.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="padding:88px 32px" id="contact">
+  <div class="cta">
+    <div><span class="mono">Vrijblijvend kennismakingsgesprek</span><h2>Klaar om grip te krijgen op uw security?</h2><p>Een vrijblijvend gesprek om te bekijken wat we voor u kunnen betekenen.</p></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><a href="mailto:info@cloudfellows.nl" class="btn teal">Plan een kennismaking</a><a href="#over" class="btn" style="border-color:currentColor;color:inherit">Over CloudFellows</a></div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a href="#top" class="brand" style="font-size:17px"><img src="assets/logo-mark.svg" alt="" style="width:28px;height:30px"><span><span class="c">Cloud</span><span class="f">Fellows</span></span><span style="color:var(--teal);font-weight:600;margin-left:6px">· Vertrouwd in de cloud</span></a>
+    <nav class="navlinks" aria-label="Voettekst"><a href="#diensten">Diensten</a><a href="#aanpak">Aanpak</a><a href="#over">Over ons</a><a href="#contact">Contact</a></nav>
+    <div>© <span id="year"></span> CloudFellows · Zoetermeer · KvK [NUMMER]</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent=new Date().getFullYear();
+  document.getElementById('themeToggle').addEventListener('click',function(){
+    var r=document.documentElement,t=r.getAttribute('data-theme')==='dark'?'light':'dark';
+    r.setAttribute('data-theme',t);try{localStorage.setItem('cf-theme',t)}catch(e){}
+  });
+</script>
+</body>
+</html>
